@@ -3,12 +3,16 @@ export const state = () => ({
   /**
    * List of Mensa objects
    */
-  plans: null
+  plans: null,
+  selectedMensa: null
 });
 
 export const mutations = {
   setPlans (state, data) {
     state.plans = data;
+  },
+  setSelectedMensa (mensa) {
+    state.selectedMensa = mensa;
   }
 }
 
@@ -47,5 +51,6 @@ export const actions = {
     }
 
     commit('setPlans', result);
+    commit('setSelectedMensa', result[0]);
   }
 };

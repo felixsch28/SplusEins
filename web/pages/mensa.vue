@@ -2,34 +2,49 @@
   <v-container
     fluid
   >
-    <div>
+    <div
+      v-if="$vuetify.breakpoint.mobile"
+    >
+      <v-select
+          :items="plans"
+          label="Mensa auswählen"
+          outlined
+          item-text="name"
+          :item-value="plan => plan"
+          v-model="selectedMensa"
+      />
+      Test: {{ selectedMensa }}
+    </div>
+    <div
+      v-else
+    >
       <v-tabs>
-        <v-tab
-          v-for="item in plans"
-          :key="item.id"
-          ripple
-        >
-          {{ item.name }}
-          <v-tooltip
-            bottom
-            v-if="isOpen(item.opening_hours)"
+          <v-tab
+            v-for="item in plans"
+            :key="item.id"
+            ripple
           >
-            <template #activator="{ on }">
-              <span v-on="on">
-                <v-chip
-                  class="ml-2"
-                  color="green"
-                  text-color="white"
-                >
-                  <v-icon>
-                    {{ mdiFoodForkDrink }}
-                  </v-icon>
-                </v-chip>
-              </span>
-            </template>
-            <span>Aktuell geöffnet</span>
-          </v-tooltip>
-        </v-tab>
+            {{ item.name }}
+            <v-tooltip
+              bottom
+              v-if="isOpen(item.opening_hours)"
+            >
+              <template #activator="{ on }">
+                <span v-on="on">
+                  <v-chip
+                    class="ml-2"
+                    color="green"
+                    text-color="white"
+                  >
+                    <v-icon>
+                      {{ mdiFoodForkDrink }}
+                    </v-icon>
+                  </v-chip>
+                </span>
+              </template>
+              <span>Aktuell geöffnet</span>
+            </v-tooltip>
+          </v-tab>
         <v-tab-item
           v-for="item in plans"
           class="pa-1 pa-md-1"
@@ -244,7 +259,8 @@ export default {
   },
   computed: {
     ...mapState({
-      plans: (state) => state.mensa.plans
+      plans: (state) => state.mensa.plans,
+      selectedMensa: (state) => state.mensa.selectedMensa
     })
   },
   mounted () {
